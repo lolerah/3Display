@@ -1,0 +1,23 @@
+.scene {
+  z-index: -1;
+  position: absolute;
+  bottom: 0vh;
+  left: 0vw;
+  width: 100%;
+  height: 100%;
+}
+
+.navbar {
+  z-index: 3;
+  position: absolute;
+  left: -2vw;
+  width: 102vw;
+  bottom: 47vh;
+  height: 100vh;
+}
+
+.routing {
+  z-index: 2;
+  position: absolute;
+  top: 5vh;
+}

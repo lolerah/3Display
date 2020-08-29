@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Routing } from "./components/Routing";
 import { Main } from "./components/Main";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -8,18 +7,23 @@ export default class App extends Component {
 
   render() {
     return (
-      <div className="container-fluid">
-        <div className="row ">HEADER</div>
-        <div className="row ">
-          <div className="col">
+      <React.Fragment>
+        <div className="container-fluid">
+          <div className="row">
+            <div className="col" style={{ backgroundColor: "gold" }}>
+              HEADER
+            </div>
+          </div>
+          <div className="row">
             <Main />
           </div>
-          <div className="col-11">
-            <Routing />
+          <div className="row">
+            <div className="col" style={{ backgroundColor: "teal" }}>
+              FOOT
+            </div>
           </div>
         </div>
-        <div className="row ">FOOTER</div>
-      </div>
+      </React.Fragment>
     );
   }
 }

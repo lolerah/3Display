@@ -4,7 +4,6 @@ import { Home } from "./Home";
 import { FetchData } from "./FetchData";
 import { Counter } from "./Counter";
 import { About } from "./About";
-import { Scene } from "./Scene";
 
 export class Routing extends Component {
   render() {
@@ -16,7 +15,6 @@ export class Routing extends Component {
         {/*<Route path="/visualisation" component={Visualisation} />
       <Route path="/contact" component={Contact} />*/}
         <Route path="/fetch-data" component={FetchData} />
-        <Route path="/visualisation" component={Scene} />
       </div>
     );
   }
