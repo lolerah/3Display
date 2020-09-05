@@ -11,14 +11,14 @@ export class Main extends Component {
     rotY: 0.0,
   };
 
-  handleIncreseRotationX = () => {
-    const rotX = this.state.rotX + 0.001;
-    this.setState({ rotX });
+  handleRotationX = (increase) => {
+    const rotX = increase ? 0.01 : -0.01;
+    this.setState({ rotX, rotY: 0.0 });
   };
 
-  handleIncreseRotationY = () => {
-    const rotY = this.state.rotY + 0.001;
-    this.setState({ rotY });
+  handleRotationY = (increase) => {
+    const rotY = increase ? 0.01 : -0.01;
+    this.setState({ rotX: 0.0, rotY });
   };
 
   render() {
@@ -33,8 +33,8 @@ export class Main extends Component {
         </div>
         <div className="routing">
           <Home
-            onIncreaseRotX={this.handleIncreseRotationX}
-            onIncreaseRotY={this.handleIncreseRotationY}
+            onChangeRotX={this.handleRotationX}
+            onChangeRotY={this.handleRotationY}
           />
         </div>
       </div>

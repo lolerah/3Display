@@ -48,6 +48,7 @@ export class Scene extends Component {
 
   componentDidUpdate() {
     const { rotX, rotY } = this.props;
+
     this.animate(rotX, rotY);
   }
 
@@ -73,7 +74,14 @@ export class Scene extends Component {
     scene.children[0].rotation.x += rotX;
     scene.children[0].rotation.y += rotY;
     this.renderScene();
-    this.frameId = window.requestAnimationFrame(() => this.animate(rotX, rotY));
+
+    if (
+      scene.children[0].rotation.x !== 0 ||
+      scene.children[0].rotation.y !== 0
+    )
+      this.frameId = window.requestAnimationFrame(() =>
+        this.animate(rotX, rotY)
+      );
   };
 
   renderScene = () => {
