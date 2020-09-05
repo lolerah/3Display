@@ -1,21 +1,41 @@
 import React, { Component } from "react";
 import { Scene } from "./Scene";
 import { NewNavMenu } from "./NewNavMenu";
-import { Routing } from "./Routing";
+//import { Routing } from "./Routing";
+import { Home } from "./Home";
 import "./Main.css";
 
 export class Main extends Component {
+  state = {
+    rotX: 0.0,
+    rotY: 0.0,
+  };
+
+  handleIncreseRotationX = () => {
+    const rotX = this.state.rotX + 0.001;
+    this.setState({ rotX });
+  };
+
+  handleIncreseRotationY = () => {
+    const rotY = this.state.rotY + 0.001;
+    this.setState({ rotY });
+  };
+
   render() {
+    const { rotX, rotY } = this.state;
     return (
       <div className="col">
         <div className="scene">
-          <Scene />
+          <Scene rotX={rotX} rotY={rotY} />
         </div>
         <div className="navbar">
           <NewNavMenu />
         </div>
         <div className="routing">
-          <Routing />
+          <Home
+            onIncreaseRotX={this.handleIncreseRotationX}
+            onIncreaseRotY={this.handleIncreseRotationY}
+          />
         </div>
       </div>
     );

@@ -2,30 +2,93 @@ import React, { Component } from "react";
 import * as THREE from "three";
 
 export class Scene extends Component {
-    componentDidMount() {
-        var scene = new THREE.Scene();
-        var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        var renderer = new THREE.WebGLRenderer();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        this.mount.appendChild(renderer.domElement);
-        var geometry = new THREE.BoxGeometry(1, 1, 1);
-        var material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-        var cube = new THREE.Mesh(geometry, material);
-        scene.add(cube);
-        camera.position.z = 5;
-        var animate = function () {
-            requestAnimationFrame(animate);
-            cube.rotation.x += 0.01;
-            cube.rotation.y += 0.01;
-            renderer.render(scene, camera);
-        };
-        animate();
+  state = {
+    scene: {},
+    camera: {},
+    renderer: {},
+    objects: {},
+    width: {},
+    height: {},
+  };
+
+  constructor(props) {
+    super(props);
+
+    this.state.width = window.innerWidth;
+    this.state.height = window.innerHeight;
+
+    this.state.scene = new THREE.Scene();
+    this.state.camera = new THREE.PerspectiveCamera(
+      75,
+      this.state.width / this.state.height,
+      0.1,
+      1000
+    );
+    this.state.renderer = new THREE.WebGLRenderer({ antialias: true });
+  }
+
+  componentDidMount() {
+    const { scene, camera, renderer, width, height } = this.state;
+
+    scene.background = new THREE.Color(0xffffff);
+
+    camera.position.z = 4;
+
+    renderer.setClearColor("0000000");
+    renderer.setSize(width, height);
+    this.mount.appendChild(renderer.domElement);
+
+    const geometry = new THREE.BoxGeometry(1, 1, 1);
+    const material = new THREE.MeshBasicMaterial({ color: "#433F81" });
+    const cube = new THREE.Mesh(geometry, material);
+    scene.add(cube);
+    this.setState({ scene, objects: cube });
+    this.start();
+  }
+
+  componentDidUpdate() {
+    const { rotX, rotY } = this.props;
+    this.animate(rotX, rotY);
+  }
+
+  componentWillUnmount() {
+    this.stop();
+    this.mount.removeChild(this.renderer.domElement);
+  }
+
+  start = () => {
+    const { rotX, rotY } = this.props;
+    if (!this.frameId) {
+      this.frameId = requestAnimationFrame(() => this.animate(rotX, rotY));
     }
-    render() {
-        return (
-            <div ref={ref => (this.mount = ref)} />
-        )
-    }
+  };
+
+  stop = () => {
+    cancelAnimationFrame(this.frameId);
+  };
+
+  animate = (rotX, rotY) => {
+    const { scene } = this.state;
+
+    scene.children[0].rotation.x += rotX;
+    scene.children[0].rotation.y += rotY;
+    this.renderScene();
+    this.frameId = window.requestAnimationFrame(() => this.animate(rotX, rotY));
+  };
+
+  renderScene = () => {
+    this.state.renderer.render(this.state.scene, this.state.camera);
+  };
+
+  render() {
+    return (
+      <div
+        ref={(mount) => {
+          this.mount = mount;
+        }}
+      />
+    );
+  }
 }
 
 export default Scene;
