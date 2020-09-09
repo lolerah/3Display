@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { Scene } from "./Scene";
 import { NewNavMenu } from "./NewNavMenu";
-//import { Routing } from "./Routing";
+import { Route } from "react-router-dom";
 import { Home } from "./Home";
-import "./Main.css";
+import { About } from "./About";
 
 export class Main extends Component {
   state = {
@@ -28,14 +28,21 @@ export class Main extends Component {
         <div className="scene">
           <Scene rotX={rotX} rotY={rotY} />
         </div>
-        <div className="navbar">
-          <NewNavMenu />
-        </div>
+        <NewNavMenu />
         <div className="routing">
-          <Home
-            onChangeRotX={this.handleRotationX}
-            onChangeRotY={this.handleRotationY}
+          <Route
+            exact
+            path="/"
+            render={(props) => (
+              <Home
+                onChangeRotX={this.handleRotationX}
+                onChangeRotY={this.handleRotationY}
+                {...props}
+              />
+            )}
           />
+          <Route path="/about" component={About} />
+          <Route path="/contact" component={About} />
         </div>
       </div>
     );
